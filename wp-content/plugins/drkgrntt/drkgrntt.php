@@ -13,19 +13,31 @@ class drkgrntt {
 
   public function __construct() {
 
-    add_action('init', [$this, 'do_something']);
     add_shortcode('dg_login_form', [$this, 'login_form_shortcode']);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
   }
 
 
-  public function do_something() {
-    echo '<h1>doing something</h1>';
+  public function enqueue_styles() {
+
+    wp_enqueue_style('drkgrntt', __DIR__ .'/drkgrntt.css');
+    wp_enqueue_style('dg_login_form', __DIR__ .'/login_form/login_form.css');
+    wp_enqueue_style('dg_register_form', __DIR__ .'/register_form/register_form.css');
   }
 
 
   public function login_form_shortcode($args) {
 
+    ?>
+
+    <div class="dg-login-page">
+      <?php include __DIR__ .'/login_form/login_form.php'; ?>
+      <?php include __DIR__ .'/register_form/register_form.php'; ?>
+    </div>
+
+    <?php
   }
 }
+
 
 new drkgrntt();
